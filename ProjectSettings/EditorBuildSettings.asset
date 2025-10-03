@@ -14,4 +14,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: f374eabc5b63a2d49a11528cbd203518
+  - enabled: 1
+    path: Assets/Scenes/Practice Arena.unity
+    guid: aeedd4ce97cf1a44889cf445c69d9e69
+  - enabled: 1
+    path: Assets/Scenes/Play Area.unity
+    guid: 19de085668ddf7f4a8be50a39e38e4be
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
