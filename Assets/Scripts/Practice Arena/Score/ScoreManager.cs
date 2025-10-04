@@ -18,6 +18,9 @@ public class ScoreManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+
+        Application.targetFrameRate = 30; //for now
     }
 
     void Start()
