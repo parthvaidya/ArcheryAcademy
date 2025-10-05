@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Fruit : MonoBehaviour
@@ -14,9 +15,25 @@ public class Fruit : MonoBehaviour
         col = GetComponent<Collider2D>();
     }
 
+    //void OnEnable()
+    //{
+    //    // Reset physics every time fruit is reused
+    //    if (rb != null)
+    //    {
+    //        rb.linearVelocity = Vector2.zero;
+    //        rb.angularVelocity = 0f;
+    //        rb.gravityScale = 1f;
+    //        rb.bodyType = RigidbodyType2D.Dynamic;
+    //        rb.simulated = true;
+    //    }
+
+    //    if (col != null) col.enabled = true;
+
+    //    isHit = false;
+    //}
+
     void OnEnable()
     {
-        // Reset physics every time fruit is reused
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -26,9 +43,20 @@ public class Fruit : MonoBehaviour
             rb.simulated = true;
         }
 
-        if (col != null) col.enabled = true;
+        if (col != null)
+        {
+            col.enabled = false; // <-- temporarily disable collider
+            StartCoroutine(EnableColliderNextFrame());
+        }
 
         isHit = false;
+    }
+
+    IEnumerator EnableColliderNextFrame()
+    {
+        yield return new WaitForFixedUpdate();
+        if (col != null)
+            col.enabled = true;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -38,9 +66,11 @@ public class Fruit : MonoBehaviour
         if (collision.gameObject.CompareTag("Arrow"))
         {
             isHit = true;
-            
-            if (ScoreManager.Instance != null)
-                ScoreManager.Instance.AddScore(points);
+
+            //if (ScoreManager.Instance != null)
+            //    ScoreManager.Instance.AddScore(points);
+            if (GameManager.Instance != null)
+                GameManager.Instance.AddScore(points);
 
             // optional: spawn local hit VFX (arrow typically handles explosion), etc.
         }

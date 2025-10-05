@@ -44,26 +44,7 @@ public class BowScript : MonoBehaviour
             // face in shooting direction
             FaceForward();
 
-            //if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-            //{
-            //    ShowDots(true);
-
-            //    //  calculate how many dots should be active based on force
-            //    int activeDots = Mathf.Clamp(Mathf.RoundToInt(currentForce * 0.1f), 1, numberOfPoints);
-
-            //    for (int i = 0; i < numberOfPoints; i++)
-            //    {
-            //        if (i < activeDots)
-            //        {
-            //            Points[i].SetActive(true);
-            //            Points[i].transform.position = PointsPosition(i * step);
-            //        }
-            //        else
-            //        {
-            //            Points[i].SetActive(false);
-            //        }
-            //    }
-            //}
+            
 
             if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
             {

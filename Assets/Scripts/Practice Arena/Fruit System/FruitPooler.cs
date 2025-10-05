@@ -6,65 +6,21 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class FruitPooler : MonoBehaviour
 {
-    //public static FruitPooler Instance;
 
-    //[System.Serializable]
-    //public class FruitType
-    //{
-    //    public string name;          
-    //    public GameObject prefab;    
-    //    public int poolSize = 10;    
-    //}
-
-    //[Header("Fruit Types")]
-    //public List<FruitType> fruitTypes;
-
-    //private Dictionary<string, Queue<GameObject>> poolDictionary = new Dictionary<string, Queue<GameObject>>();
-
-    //void Awake()
-    //{
-    //    Instance = this;
-    //}
-
-    //void Start()
-    //{
-    //    // Create a pool for each fruit type
-    //    foreach (FruitType type in fruitTypes)
-    //    {
-    //        Queue<GameObject> fruitQueue = new Queue<GameObject>();
-
-    //        for (int i = 0; i < type.poolSize; i++)
-    //        {
-    //            GameObject obj = Instantiate(type.prefab);
-    //            obj.SetActive(false);
-    //            fruitQueue.Enqueue(obj);
-    //        }
-
-    //        poolDictionary.Add(type.name, fruitQueue);
-    //    }
-    //}
-
-    //public GameObject GetFruit(string fruitName)
-    //{
-    //    if (!poolDictionary.ContainsKey(fruitName)) return null;
-
-    //    GameObject fruit = poolDictionary[fruitName].Dequeue();
-    //    fruit.SetActive(true);
-    //    poolDictionary[fruitName].Enqueue(fruit); // recycle
-    //    return fruit;
-    //} 
 
     public static FruitPooler Instance;
 
     [System.Serializable]
     public class FruitType
     {
-        public string key;            // Addressable key (e.g. "BigFruit", "SmallFruit")
-        public int poolSize = 10;     // Preload amount
+        [Tooltip("Addressable key (e.g. 'BigFruit', 'SmallFruit', 'RareFruit')")]
+        public string key;
+        [Tooltip("Number of objects preloaded into the pool")]
+        public int poolSize = 10;
     }
 
-    [Header("Fruit Types")]
-    public List<FruitType> fruitTypes;
+    [Header("Fruit Types (Add Big, Small, Rare etc)")]
+    public List<FruitType> fruitTypes = new List<FruitType>();
 
     private Dictionary<string, Queue<GameObject>> poolDictionary = new Dictionary<string, Queue<GameObject>>();
     private Dictionary<string, GameObject> prefabCache = new Dictionary<string, GameObject>();
@@ -85,6 +41,7 @@ public class FruitPooler : MonoBehaviour
     {
         foreach (FruitType type in fruitTypes)
         {
+            // Load Addressable prefab
             AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(type.key);
             yield return handle;
 
@@ -103,6 +60,7 @@ public class FruitPooler : MonoBehaviour
                 }
 
                 poolDictionary.Add(type.key, fruitQueue);
+                Debug.Log($" Loaded fruit type: {type.key} ({type.poolSize} pooled)");
             }
             else
             {
@@ -123,7 +81,7 @@ public class FruitPooler : MonoBehaviour
 
         if (!poolDictionary.ContainsKey(key))
         {
-            Debug.LogError($" Fruit type {key} not found!");
+            Debug.LogError($" Fruit type '{key}' not found!");
             return null;
         }
 

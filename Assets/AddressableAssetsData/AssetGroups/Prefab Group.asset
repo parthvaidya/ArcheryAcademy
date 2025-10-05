@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6dfac5f158304934f895e58d50340da4
+    m_Address: RareFruit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f30b78b3c187e854095f8d93c64946ea
     m_Address: BigFruit
     m_ReadOnly: 0

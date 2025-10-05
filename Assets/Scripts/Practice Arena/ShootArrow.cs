@@ -1,56 +1,30 @@
+
+
+using TMPro;
 using UnityEngine;
 
 public class ShootArrow : MonoBehaviour
 {
-    //public GameObject Arrow;
-    //private BowScript bowScript;
-
-    //void Start()
-    //{
-    //    bowScript = GetComponent<BowScript>();
-    //}
-
-    //void Update()
-    //{
-    //    if (Input.touchCount > 0)
-    //    {
-    //        Touch touch = Input.GetTouch(0);
-
-    //        // shoot when finger is released
-    //        if (touch.phase == TouchPhase.Ended)
-    //        {
-    //            Shoot();
-    //        }
-    //    }
-    //}
-
-    //void Shoot()
-    //{
-    //    if (bowScript == null) return;
-
-    //    GameObject ArrowIns = Instantiate(Arrow, transform.position, transform.rotation);
-
-    //    ArrowIns.GetComponent<Rigidbody2D>().linearVelocity =
-    //        transform.right * bowScript.currentForce;
-
-    //    //  Hide dots after shooting
-    //    bowScript.ShowDots(false);
-    //}
-
     private BowScript bowScript;
 
-    void Start()
+    [Header("Arrow Settings")]
+    public int totalArrows = 100; // starting arrow count
+
+    [Header("UI")]
+    public TextMeshProUGUI arrowCountText; // assign in Inspector
+
+    private void Start()
     {
         bowScript = GetComponent<BowScript>();
+        UpdateArrowUI();
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
-            // shoot when finger is released
             if (touch.phase == TouchPhase.Ended)
             {
                 Shoot();
@@ -60,25 +34,52 @@ public class ShootArrow : MonoBehaviour
 
     void Shoot()
     {
+        // stop if no arrows left
+        if (totalArrows <= 0)
+        {
+            Debug.Log("No arrows left!");
+            return;
+        }
+
         if (bowScript == null || ArrowPooler.Instance == null) return;
 
-        // Get arrow from pool instead of Instantiate
+        // get arrow from pool
         GameObject arrow = ArrowPooler.Instance.GetArrow();
+        if (arrow == null) return;
 
-        // reset transform
+        // reset transform and physics
         arrow.transform.position = transform.position;
         arrow.transform.rotation = transform.rotation;
 
-        // reset physics
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
 
-        // shoot with calculated force
+        // apply shooting force
         rb.linearVelocity = transform.right * bowScript.currentForce;
 
-        // Hide dots after shooting
+        // hide trajectory dots
         bowScript.ShowDots(false);
+
+        // decrement arrow count
+        totalArrows--;
+        UpdateArrowUI();
     }
 
+    void UpdateArrowUI()
+    {
+        if (arrowCountText != null)
+        {
+            arrowCountText.text = $"{totalArrows}";
+        }
+    }
+
+    // optional — call this when you reward more arrows
+    public void AddArrows(int amount)
+    {
+        totalArrows += amount;
+        UpdateArrowUI();
+    }
 }
+
+

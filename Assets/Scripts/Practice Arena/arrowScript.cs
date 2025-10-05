@@ -21,16 +21,35 @@ public class arrowScript : MonoBehaviour
         arrowCollider = GetComponent<Collider2D>();
     }
 
+    //void OnEnable()
+    //{
+    //    // Reset state when reused from pool
+    //    hasHit = false;
+    //    stuckFruit = null;
+    //    stuckFruitRb = null;
+    //    stuckFruitCol = null;
+
+    //    // restore physics & collider
+    //    if (arrowCollider != null) arrowCollider.enabled = true;
+    //    if (rb != null)
+    //    {
+    //        rb.simulated = true;
+    //        rb.linearVelocity = Vector2.zero;
+    //        rb.angularVelocity = 0f;
+    //    }
+
+    //    // unparent in case it was parented previously
+    //    transform.SetParent(null);
+    //}
+
     void OnEnable()
     {
-        // Reset state when reused from pool
+        // Reset state
         hasHit = false;
         stuckFruit = null;
         stuckFruitRb = null;
         stuckFruitCol = null;
 
-        // restore physics & collider
-        if (arrowCollider != null) arrowCollider.enabled = true;
         if (rb != null)
         {
             rb.simulated = true;
@@ -38,21 +57,40 @@ public class arrowScript : MonoBehaviour
             rb.angularVelocity = 0f;
         }
 
-        // unparent in case it was parented previously
         transform.SetParent(null);
+
+        //  Temporarily disable collider to prevent immediate overlap hit
+        if (arrowCollider != null)
+        {
+            arrowCollider.enabled = false;
+            StartCoroutine(EnableColliderNextFrame());
+        }
     }
+
+    IEnumerator EnableColliderNextFrame()
+    {
+        yield return new WaitForSeconds(0.05f); // wait ~1/20th sec
+        if (arrowCollider != null)
+            arrowCollider.enabled = true;
+    }
+
 
     void Update()
     {
         if (!hasHit)
-        {
             trackMovement();
-        }
-        else if (stuckFruit != null)
+
+        //  Detect when arrow leaves camera bounds
+        Vector3 screenPos = Camera.main.WorldToViewportPoint(transform.position);
+        if (screenPos.x < -0.1f || screenPos.x > 1.1f || screenPos.y < -0.1f || screenPos.y > 1.1f)
         {
-            // keep fruit exactly on the arrow (transform parent already handles this,
-            // but keep here in case you want additional offsets)
-            // stuckFruit.position = transform.position;
+            //if (ComboManager.Instance != null)
+            //    ComboManager.Instance.RegisterMiss();
+
+            if (GameManager.Instance != null)
+                GameManager.Instance.RegisterMiss();
+
+            ArrowPooler.Instance.ReturnArrow(gameObject);
         }
     }
 
@@ -73,6 +111,15 @@ public class arrowScript : MonoBehaviour
         if (col.gameObject.CompareTag("Fruit"))
         {
             hasHit = true;
+
+            //if (ComboManager.Instance != null)
+            //    ComboManager.Instance.RegisterHit();
+
+
+            if (GameManager.Instance != null)
+                GameManager.Instance.RegisterHit();
+
+           
 
             // cache references
             stuckFruit = col.transform;
@@ -112,6 +159,11 @@ public class arrowScript : MonoBehaviour
         {
             // hit something else (ground/wall). Stop and return after short delay.
             hasHit = true;
+            //if (ComboManager.Instance != null)
+            //    ComboManager.Instance.RegisterMiss();
+            if (GameManager.Instance != null)
+                GameManager.Instance.RegisterMiss();
+
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
             if (arrowCollider != null) arrowCollider.enabled = false;
@@ -161,3 +213,4 @@ public class arrowScript : MonoBehaviour
         ArrowPooler.Instance.ReturnArrow(gameObject);
     }
 }
+
