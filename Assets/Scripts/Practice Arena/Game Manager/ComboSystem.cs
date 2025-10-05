@@ -54,16 +54,31 @@ public class ComboSystem
             case 3:
                 message = "3x Streak!";
                 VibrateStrong(); // strong vibration only on combo streaks
+                if (Camera.main != null)
+                {
+                    Transform cam = Camera.main.transform;
+                    GameManager.Instance.StartCoroutine(DoCameraShake(cam, 0.2f, 0.05f));
+                }
                 break;
 
             case 5:
                 message = "5x Combo!";
                 VibrateStrong();
+                if (Camera.main != null)
+                {
+                    Transform cam = Camera.main.transform;
+                    GameManager.Instance.StartCoroutine(DoCameraShake(cam, 0.2f, 0.05f));
+                }
                 break;
 
             case 10:
                 message = "10x Master Streak!";
                 VibrateStrong();
+                if (Camera.main != null)
+                {
+                    Transform cam = Camera.main.transform;
+                    GameManager.Instance.StartCoroutine(DoCameraShake(cam, 0.2f, 0.05f));
+                }
                 break;
 
             default:
@@ -73,6 +88,24 @@ public class ComboSystem
 
         if (message != null)
             ShowComboMessage(message);
+    }
+
+    private IEnumerator DoCameraShake(Transform cam, float duration, float magnitude)
+    {
+        Vector3 originalPos = cam.localPosition;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1.2f, 1.2f) * magnitude;
+            float y = Random.Range(-1.2f, 1.2f) * magnitude;
+            cam.localPosition = originalPos + new Vector3(x, y, 0f);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        cam.localPosition = originalPos;
     }
 
     public void RegisterMiss()

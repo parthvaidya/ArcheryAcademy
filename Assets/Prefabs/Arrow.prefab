@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8992148069506612261}
   - component: {fileID: 4946823006700526976}
   - component: {fileID: 6269845858057422603}
-  - component: {fileID: 3445699288593737524}
   - component: {fileID: 5950814860123887578}
+  - component: {fileID: 770237864347399967}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Arrow
@@ -199,18 +199,6 @@ PolygonCollider2D:
       - {x: -1.89, y: -0.07}
       - {x: -1.88, y: -0.049999997}
   m_UseDelaunayMesh: 0
---- !u!114 &3445699288593737524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8644954624596871061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abd01d34f845d6c42ad13e9727e4618c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::arrowScript
 --- !u!96 &5950814860123887578
 TrailRenderer:
   serializedVersion: 3
@@ -330,3 +318,15 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &770237864347399967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8644954624596871061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48552fb0697a1054f9458d0c29f156f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArrowView

@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 5779899867207430898}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.41, y: -1.76, z: 0}
+  m_LocalPosition: {x: -6.43, y: -1.74, z: 0}
   m_LocalScale: {x: 0.22661267, y: 0.1970951, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -155,8 +155,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.051763278}
-  m_Radius: 2.5596437
+  m_Offset: {x: 0, y: -0.2690335}
+  m_Radius: 2.2026997
 --- !u!114 &3311205921941410756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,8 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1180d45f0c79413409e3d7afe1ec908c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fruit
-  points: 5
-  isHit: 0
+  data: {fileID: 11400000, guid: 523b4da24287f83479edee76fca2072a, type: 2}
 --- !u!96 &6600406445489081563
 TrailRenderer:
   serializedVersion: 3

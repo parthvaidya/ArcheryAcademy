@@ -155,8 +155,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.8595355}
-  m_Radius: 1.8254645
+  m_Offset: {x: 0, y: -0.9903394}
+  m_Radius: 1.6946604
 --- !u!114 &-2074169307639405090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,8 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1180d45f0c79413409e3d7afe1ec908c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fruit
-  points: 10
-  isHit: 0
+  data: {fileID: 11400000, guid: 9e3dea894e63b9649adde766d4a96e26, type: 2}
 --- !u!96 &3196228111977418555
 TrailRenderer:
   serializedVersion: 3

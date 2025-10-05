@@ -121,4 +121,25 @@ public class FruitPooler : MonoBehaviour
             Destroy(fruit); // fallback safety
         }
     }
+
+
+
+    public int GetActiveFruitCount()
+    {
+        int count = 0;
+        foreach (var pool in poolDictionary.Values)
+        {
+            // active fruits = total spawned - ones in queue
+            count += prefabCache.Count * 0; // dummy line, remove this
+        }
+
+        // simpler: count active objects manually (safe & cheap)
+        count = 0;
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.activeSelf)
+                count++;
+        }
+        return count;
+    }
 }

@@ -1,13 +1,13 @@
-using System.Collections;
+
 using UnityEngine;
+using System.Collections;
 
 public class Fruit : MonoBehaviour
 {
-    
     private Rigidbody2D rb;
     private Collider2D col;
-    public int points = 10;
-    [HideInInspector] public bool isHit = false;
+    public FruitData data;
+    public bool isHit { get; private set; }
 
     void Awake()
     {
@@ -15,25 +15,9 @@ public class Fruit : MonoBehaviour
         col = GetComponent<Collider2D>();
     }
 
-    //void OnEnable()
-    //{
-    //    // Reset physics every time fruit is reused
-    //    if (rb != null)
-    //    {
-    //        rb.linearVelocity = Vector2.zero;
-    //        rb.angularVelocity = 0f;
-    //        rb.gravityScale = 1f;
-    //        rb.bodyType = RigidbodyType2D.Dynamic;
-    //        rb.simulated = true;
-    //    }
-
-    //    if (col != null) col.enabled = true;
-
-    //    isHit = false;
-    //}
-
     void OnEnable()
     {
+        isHit = false;
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -45,44 +29,39 @@ public class Fruit : MonoBehaviour
 
         if (col != null)
         {
-            col.enabled = false; // <-- temporarily disable collider
+            col.enabled = false;
             StartCoroutine(EnableColliderNextFrame());
         }
-
-        isHit = false;
     }
 
     IEnumerator EnableColliderNextFrame()
     {
         yield return new WaitForFixedUpdate();
-        if (col != null)
-            col.enabled = true;
+        if (col != null) col.enabled = true;
+    }
+
+    public void Launch(Vector2 direction)
+    {
+        if (data == null) return;
+
+        rb.AddForce(direction * data.GetRandomizedForce(), ForceMode2D.Impulse);
+        rb.AddTorque(data.GetRandomTorque(), ForceMode2D.Impulse);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (isHit) return;
+        if (!collision.gameObject.CompareTag("Arrow")) return;
 
-        if (collision.gameObject.CompareTag("Arrow"))
-        {
-            isHit = true;
+        isHit = true;
 
-            //if (ScoreManager.Instance != null)
-            //    ScoreManager.Instance.AddScore(points);
-            if (GameManager.Instance != null)
-                GameManager.Instance.AddScore(points);
-
-            // optional: spawn local hit VFX (arrow typically handles explosion), etc.
-        }
+        if (GameManager.Instance != null)
+            GameManager.Instance.AddScore(data.points);
     }
 
     void Update()
     {
-        // if missed and fell below screen, recycle
         if (!isHit && transform.position.y < -6f)
-        {
             gameObject.SetActive(false);
-        }
     }
-
 }
