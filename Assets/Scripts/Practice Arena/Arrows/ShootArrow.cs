@@ -2,6 +2,7 @@
 
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ShootArrow : MonoBehaviour
 {
@@ -21,10 +22,14 @@ public class ShootArrow : MonoBehaviour
 
     private void Update()
     {
+
+        if (Time.timeScale == 0f) return;
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
+            if (IsTouchOverUI(touch)) return;
             if (touch.phase == TouchPhase.Ended)
             {
                 Shoot();
@@ -66,6 +71,12 @@ public class ShootArrow : MonoBehaviour
         UpdateArrowUI();
     }
 
+
+    private bool IsTouchOverUI(Touch touch)
+    {
+        // check if this touch is over any UI element
+        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId);
+    }
     void UpdateArrowUI()
     {
         if (arrowCountText != null)
