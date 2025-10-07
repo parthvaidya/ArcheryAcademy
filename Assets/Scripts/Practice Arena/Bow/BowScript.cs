@@ -31,51 +31,7 @@ public class BowScript : MonoBehaviour
         bowPos = transform.position;
     }
 
-    //void Update()
-    //{
-    //    if (Input.touchCount > 0)
-    //    {
-    //        Touch touch = Input.GetTouch(0);
-    //        Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-
-    //        // drag direction is opposite
-    //        direction = bowPos - touchPos;
-
-    //        // pull distance = power
-    //        currentForce = Mathf.Clamp(direction.magnitude * forceMultiplier, 0, maxForce);
-
-    //        // face in shooting direction
-    //        FaceForward();
-
-
-
-    //        if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-    //        {
-    //            ShowDots(true);
-
-    //            // More dots based on force
-    //            int activeDots = Mathf.Clamp(Mathf.RoundToInt(currentForce * 0.2f), 1, numberOfPoints);
-
-    //            for (int i = 0; i < numberOfPoints; i++)
-    //            {
-    //                if (i < activeDots)
-    //                {
-    //                    Points[i].SetActive(true);
-    //                    Points[i].transform.position = PointsPosition(i * step); // step = 0.02f
-    //                }
-    //                else
-    //                {
-    //                    Points[i].SetActive(false);
-    //                }
-    //            }
-    //        }
-
-    //        if (touch.phase == TouchPhase.Ended)
-    //        {
-    //            ShowDots(false);
-    //        }
-    //    }
-    //}
+   
 
     void Update()
     {

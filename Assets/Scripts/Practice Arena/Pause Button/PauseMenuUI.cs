@@ -37,6 +37,9 @@ public class PauseMenuUI : MonoBehaviour
 
     private void OnRestartPressed()
     {
+        // Save current score before reloading
+       
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -44,6 +47,11 @@ public class PauseMenuUI : MonoBehaviour
     private void OnQuitPressed()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public static class PersistentData
+    {
+        public static int LastScore = 0;
     }
 }

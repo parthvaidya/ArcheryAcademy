@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
-using System.Collections;
+using static PauseMenuUI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI bestScoreText; 
     [SerializeField] private TextMeshProUGUI comboText;
 
     [Header("Combo Settings")]
@@ -21,28 +23,29 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        Instance = this;
+
+        scoreSystem = new ScoreSystem(scoreText, bestScoreText);
+        comboSystem = new ComboSystem(comboText, comboResetTime, textDisplayTime, floatUpDistance, fadeOutDuration);
+
+        // Only restore if coming from another scene, not restart
+        if (SceneManager.GetActiveScene().name != "Main Menu" && PersistentData.LastScore > 0)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-
-            scoreSystem = new ScoreSystem(scoreText);
-            comboSystem = new ComboSystem(comboText, comboResetTime, textDisplayTime, floatUpDistance, fadeOutDuration);
-
-            Application.targetFrameRate = 60;
+            scoreSystem.SetScore(PersistentData.LastScore);
+            PersistentData.LastScore = 0; 
         }
         else
         {
-            Destroy(gameObject);
+            scoreSystem.ResetScore(); 
         }
+
+        Application.targetFrameRate = 60;
     }
 
     private void Update()
     {
         comboSystem.Update();
     }
-
-
 
     public void AddScore(int amount)
     {
@@ -60,7 +63,4 @@ public class GameManager : MonoBehaviour
     }
 
     public int GetScore() => scoreSystem.CurrentScore;
-
 }
-
-   
