@@ -1640,8 +1640,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 762cd7ffea80af443bd87abb03ecfbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShootArrow
-  totalArrows: 100
+  totalArrows: 5
+  bowScript: {fileID: 1323302376}
   arrowCountText: {fileID: 894748632}
+  outOfArrowsPrefab: {fileID: 5388389256836018741, guid: cea2dd4109c2c9a428d3f527da001e99, type: 3}
+  canvas: {fileID: 708326990}
 --- !u!114 &1323302380
 MonoBehaviour:
   m_ObjectHideFlags: 0

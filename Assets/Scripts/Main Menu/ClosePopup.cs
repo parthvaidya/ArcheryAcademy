@@ -10,6 +10,8 @@ public class ClosePopup : MonoBehaviour
         {
             t = t.parent;
         }
-        Destroy(t.gameObject); // destroys only popup prefab
+        //Destroy(t.gameObject); // destroys only popup prefab
+
+        t.gameObject.SetActive(false);
     }
 }
