@@ -745,6 +745,9 @@ MonoBehaviour:
   scoreText: {fileID: 8107142723864435}
   bestScoreText: {fileID: 2937413226438643719}
   quitButton: {fileID: 7694388767528266083}
+  add50Button: {fileID: 2958390110691120450}
+  add100Button: {fileID: 1633271312785299570}
+  add200Button: {fileID: 6759698703353140977}
 --- !u!1 &4880251986285703906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,7 +1082,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OutOfArrowsUI
   scoreText: {fileID: 8107142723864435}
   bestScoreText: {fileID: 2937413226438643719}
-  quitButton: {fileID: 0}
+  quitButton: {fileID: 7694388767528266083}
+  add50Button: {fileID: 2958390110691120450}
+  add100Button: {fileID: 1633271312785299570}
+  add200Button: {fileID: 6759698703353140977}
 --- !u!1 &5829242841419477032
 GameObject:
   m_ObjectHideFlags: 0

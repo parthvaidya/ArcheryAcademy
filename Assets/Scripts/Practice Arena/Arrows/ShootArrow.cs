@@ -1,110 +1,3 @@
-
-
-//using TMPro;
-//using UnityEngine;
-//using UnityEngine.EventSystems;
-
-//public class ShootArrow : MonoBehaviour
-//{
-//    private BowScript bowScript;
-
-//    [Header("Arrow Settings")]
-//    public int totalArrows = 100; // starting arrow count
-
-//    [Header("UI")]
-//    public TextMeshProUGUI arrowCountText; // assign in Inspector
-
-//    [SerializeField] private OutOfArrowsUI outOfArrowsUI; // assign prefab reference in Inspector
-
-//    private int currentScore = 0;
-
-//    private void Start()
-//    {
-//        bowScript = GetComponent<BowScript>();
-//        UpdateArrowUI();
-
-//        //if (outOfArrowsUI != null)
-//        //    outOfArrowsUI.Hide();
-//    }
-
-//    private void Update()
-//    {
-
-//        if (Time.timeScale == 0f) return;
-
-//        if (Input.touchCount > 0)
-//        {
-//            Touch touch = Input.GetTouch(0);
-
-//            if (IsTouchOverUI(touch)) return;
-//            if (touch.phase == TouchPhase.Ended)
-//            {
-//                Shoot();
-//            }
-//        }
-//    }
-
-//    void Shoot()
-//    {
-//        // stop if no arrows left
-//        if (totalArrows <= 0)
-//        {
-//            Debug.Log("No arrows left!");
-//            if (outOfArrowsUI != null)
-//                outOfArrowsUI.Show(currentScore);
-//            return;
-//        }
-
-//        if (bowScript == null || ArrowPooler.Instance == null) return;
-
-//        // get arrow from pool
-//        GameObject arrow = ArrowPooler.Instance.GetArrow();
-//        if (arrow == null) return;
-
-//        // reset transform and physics
-//        arrow.transform.position = transform.position;
-//        arrow.transform.rotation = transform.rotation;
-
-//        Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
-//        rb.linearVelocity = Vector2.zero;
-//        rb.angularVelocity = 0f;
-
-//        // apply shooting force
-//        rb.linearVelocity = transform.right * bowScript.currentForce;
-
-//        // hide trajectory dots
-//        bowScript.ShowDots(false);
-
-//        // decrement arrow count
-//        totalArrows--;
-//        UpdateArrowUI();
-//        currentScore++;
-//    }
-
-
-//    private bool IsTouchOverUI(Touch touch)
-//    {
-//        // check if this touch is over any UI element
-//        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId);
-//    }
-//    void UpdateArrowUI()
-//    {
-//        if (arrowCountText != null)
-//        {
-//            arrowCountText.text = $"{totalArrows}";
-//        }
-//    }
-
-//    // optional — call this when you reward more arrows
-//    public void AddArrows(int amount)
-//    {
-//        totalArrows += amount;
-//        UpdateArrowUI();
-//        if (outOfArrowsUI != null) outOfArrowsUI.Hide();
-//    }
-//}
-
-
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -122,6 +15,9 @@ public class ShootArrow : MonoBehaviour
 
     private OutOfArrowsUI outOfArrowsUI;
 
+    private bool inputLocked = false;
+    private float inputLockTimer = 0f;
+
     private void Start()
     {
         if (bowScript == null)
@@ -136,9 +32,15 @@ public class ShootArrow : MonoBehaviour
                 outOfArrowsUI = instance.GetComponent<OutOfArrowsUI>();
 
                 if (outOfArrowsUI == null)
+                {
                     Debug.LogError("OutOfArrows prefab is missing OutOfArrowsUI script!");
+                }
                 else
+                {
+                    // Inject this ShootArrow reference into the popup
+                    outOfArrowsUI.Initialize(this);
                     outOfArrowsUI.Hide();
+                }
             }
             else
             {
@@ -157,6 +59,15 @@ public class ShootArrow : MonoBehaviour
     {
         if (Time.timeScale == 0f) return;
 
+        if (inputLocked)
+        {
+            inputLockTimer -= Time.deltaTime;
+            if (inputLockTimer <= 0f)
+                inputLocked = false;
+            else
+                return; // skip Update entirely while locked
+        }
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -167,6 +78,12 @@ public class ShootArrow : MonoBehaviour
                 Shoot();
             }
         }
+    }
+
+    public void LockInputForSeconds(float duration)
+    {
+        inputLocked = true;
+        inputLockTimer = duration;
     }
 
     void Shoot()
