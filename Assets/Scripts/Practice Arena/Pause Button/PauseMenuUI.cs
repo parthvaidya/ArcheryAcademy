@@ -38,7 +38,11 @@ public class PauseMenuUI : MonoBehaviour
     private void OnRestartPressed()
     {
         // Save current score before reloading
-       
+        if (SessionManager.Instance != null && SessionManager.Instance.ShouldShowAds && SessionManager.Instance.CanShowInterstitial())
+        {
+            if (InterstitialAdsManager.Instance != null)
+                InterstitialAdsManager.Instance.ShowAd();
+        }
 
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -47,6 +51,15 @@ public class PauseMenuUI : MonoBehaviour
     private void OnQuitPressed()
     {
         Time.timeScale = 1f;
+
+        
+
+        //if (SessionManager.Instance != null && SessionManager.Instance.ShouldShowAds)
+        //{
+        //    // Show interstitial
+        //    if (InterstitialAdsManager.Instance != null)
+        //        InterstitialAdsManager.Instance.ShowAd();
+        //}
         SceneManager.LoadScene("Main Menu");
     }
 

@@ -45,9 +45,40 @@ public class ArrowPooler : MonoBehaviour
         }
     }
 
+    //public void ReturnArrow(GameObject arrow)
+    //{
+    //    arrow.SetActive(false);
+    //    arrowPool.Enqueue(arrow);
+    //}
+
     public void ReturnArrow(GameObject arrow)
     {
+        // Reset arrow state
         arrow.SetActive(false);
+
+        // Reset transform
+        arrow.transform.SetParent(transform); // optional: keep hierarchy clean
+        arrow.transform.localPosition = Vector3.zero;
+        arrow.transform.localRotation = Quaternion.identity;
+
+        // Reset rigidbody
+        Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.Sleep();
+        }
+
+        // Reset any child objects (like fruits attached to arrow tips)
+        foreach (Transform child in arrow.transform)
+        {
+            if (child.CompareTag("Fruit"))  // or whatever tag your fruits use
+            {
+                Destroy(child.gameObject); // remove stuck fruit
+            }
+        }
+
         arrowPool.Enqueue(arrow);
     }
 

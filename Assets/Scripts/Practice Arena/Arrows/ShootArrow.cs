@@ -10,46 +10,35 @@ public class ShootArrow : MonoBehaviour
     [Header("References")]
     [SerializeField] private BowScript bowScript;
     [SerializeField] private TextMeshProUGUI arrowCountText;
-    [SerializeField] private GameObject outOfArrowsPrefab;
+    
     [SerializeField] private Canvas canvas;
 
-    private OutOfArrowsUI outOfArrowsUI;
+    [SerializeField] private OutOfArrowsUI outOfArrowsUI;
 
     private bool inputLocked = false;
     private float inputLockTimer = 0f;
 
     private void Start()
     {
+        if (SessionManager.Instance != null && SessionManager.Instance.IsFirstSession)
+        {
+            totalArrows = 100; // free arrows first time
+            SessionManager.Instance.MarkFirstSessionComplete(); // mark session done after use
+        }
+
+
+
         if (bowScript == null)
             bowScript = GetComponent<BowScript>();
 
-        // instantiate popup under canvas
-        if (outOfArrowsPrefab != null)
+        if (outOfArrowsUI != null)
         {
-            if (canvas != null)
-            {
-                GameObject instance = Instantiate(outOfArrowsPrefab, canvas.transform, false);
-                outOfArrowsUI = instance.GetComponent<OutOfArrowsUI>();
-
-                if (outOfArrowsUI == null)
-                {
-                    Debug.LogError("OutOfArrows prefab is missing OutOfArrowsUI script!");
-                }
-                else
-                {
-                    // Inject this ShootArrow reference into the popup
-                    outOfArrowsUI.Initialize(this);
-                    outOfArrowsUI.Hide();
-                }
-            }
-            else
-            {
-                Debug.LogError("Canvas not assigned in ShootArrow!");
-            }
+            outOfArrowsUI.Initialize(this);
+            outOfArrowsUI.Hide(); // keep hidden until needed
         }
         else
         {
-            Debug.LogWarning("OutOfArrows prefab not assigned in ShootArrow!");
+            Debug.LogError("OutOfArrows UI not assigned in inspector!");
         }
 
         UpdateArrowUI();
@@ -86,16 +75,18 @@ public class ShootArrow : MonoBehaviour
         inputLockTimer = duration;
     }
 
+    
+
     void Shoot()
     {
-        // stop if no arrows left
+        if (bowScript == null || ArrowPooler.Instance == null) return;
+
         if (totalArrows <= 0)
         {
+            // already no arrows, just show popup
             ShowOutOfArrowsPopup();
             return;
         }
-
-        if (bowScript == null || ArrowPooler.Instance == null) return;
 
         GameObject arrow = ArrowPooler.Instance.GetArrow();
         if (arrow == null) return;
@@ -107,18 +98,17 @@ public class ShootArrow : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
 
-        // apply shooting force
         rb.linearVelocity = transform.right * bowScript.currentForce;
-
-        // hide trajectory dots
         bowScript.ShowDots(false);
 
         totalArrows--;
         UpdateArrowUI();
 
-        //  check when arrows run out
-        if (totalArrows <= 0)
+        // popup as soon as arrows reach 0
+        if (totalArrows == 0)
+        {
             ShowOutOfArrowsPopup();
+        }
     }
 
     void ShowOutOfArrowsPopup()

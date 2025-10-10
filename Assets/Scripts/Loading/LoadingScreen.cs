@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
+using GoogleMobileAds.Api;
 
 public class LoadingScreen : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class LoadingScreen : MonoBehaviour
 
     void Start()
     {
+
+        
         StartCoroutine(LoadSceneAsync());
     }
 
@@ -83,4 +86,4 @@ public class LoadingScreen : MonoBehaviour
         }
     }
 
-    }
+}
