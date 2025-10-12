@@ -38,8 +38,9 @@ public class PauseMenuUI : MonoBehaviour
     private void OnRestartPressed()
     {
         // Save current score before reloading
-        if (SessionManager.Instance != null && SessionManager.Instance.ShouldShowAds && SessionManager.Instance.CanShowInterstitial())
+        if (SessionManager.Instance != null && SessionManager.Instance.ShouldShowAds)
         {
+            // Show interstitial
             if (InterstitialAdsManager.Instance != null)
                 InterstitialAdsManager.Instance.ShowAd();
         }

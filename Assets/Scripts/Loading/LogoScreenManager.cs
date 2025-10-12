@@ -5,9 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class LogoScreenManager : MonoBehaviour
 {
-    public void OnLogoAnimationComplete()
+   [SerializeField] private float logoDuration = 3f; // Time to show logo (in seconds)
+
+    private void Start()
     {
-        // Load next scene (e.g., MainMenu or Loading Screen)
-        SceneManager.LoadScene("Main Menu");
+        // Start a coroutine to wait and then load the next scene
+        StartCoroutine(ShowLogoAndLoad());
+    }
+
+    private IEnumerator ShowLogoAndLoad()
+    {
+        yield return new WaitForSeconds(logoDuration);
+        SceneManager.LoadScene("Main Menu"); // Make sure scene name matches exactly
     }
 }

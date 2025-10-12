@@ -10,16 +10,28 @@ public class SettingsButton : MonoBehaviour
 
     private GameObject currentPopup;
 
+    //public void OnSettingsPressed()
+    //{
+    //    if (currentPopup == null) // only open if not already open
+    //    {
+    //        currentPopup = Instantiate(popupPrefab, canvasParent);
+    //    }
+    //    else
+    //    {
+    //        Destroy(currentPopup); // toggle off if already open
+    //        currentPopup = null;
+    //    }
+    //}
+
     public void OnSettingsPressed()
     {
-        if (currentPopup == null) // only open if not already open
+        if (currentPopup == null)
         {
             currentPopup = Instantiate(popupPrefab, canvasParent);
         }
         else
         {
-            Destroy(currentPopup); // toggle off if already open
-            currentPopup = null;
+            currentPopup.SetActive(!currentPopup.activeSelf); // toggle active state
         }
     }
 }

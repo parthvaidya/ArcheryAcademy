@@ -21,7 +21,7 @@ public class OutOfArrowsUI : MonoBehaviour
     private RewardedAd rewardedAd;
     private int pendingReward = 0;
     private bool isVisible = false;
-    private bool isAdReady = false;
+    
 
     private void Awake()
     {
