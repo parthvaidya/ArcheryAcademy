@@ -91,8 +91,20 @@ public class ShootArrow : MonoBehaviour
         GameObject arrow = ArrowPooler.Instance.GetArrow();
         if (arrow == null) return;
 
-        arrow.transform.position = transform.position;
-        arrow.transform.rotation = transform.rotation;
+        //arrow.transform.position = transform.position;
+        //arrow.transform.rotation = transform.rotation;
+        if (bowScript != null && bowScript.arrowSpawnPoint != null)
+        {
+            arrow.transform.position = bowScript.arrowSpawnPoint.position;
+            arrow.transform.rotation = bowScript.arrowSpawnPoint.rotation;
+        }
+        else
+        {
+            // fallback
+            arrow.transform.position = transform.position;
+            arrow.transform.rotation = transform.rotation;
+        }
+
 
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.zero;

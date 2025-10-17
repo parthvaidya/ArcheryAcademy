@@ -18,6 +18,11 @@ public class BowScript : MonoBehaviour
 
     private float holdTime = 0f;
     private bool isHolding = false;
+
+    [SerializeField] private Animator animator;
+    [SerializeField] public Transform arrowSpawnPoint;
+    [SerializeField] public Transform trajectoryStartPoint;
+
     void Start()
     {
         Points = new GameObject[numberOfPoints];
@@ -28,10 +33,74 @@ public class BowScript : MonoBehaviour
             Points[i].SetActive(false); // hide at start
         }
 
-        bowPos = transform.position;
+        //bowPos = transform.position;
+        bowPos = trajectoryStartPoint != null ? trajectoryStartPoint.position : transform.position;
     }
 
-   
+
+
+    //void Update()
+    //{
+    //    if (Input.touchCount > 0)
+    //    {
+    //        Touch touch = Input.GetTouch(0);
+    //        Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+
+    //        // drag direction is opposite
+    //        direction = bowPos - touchPos;
+
+    //        // pull distance = power
+    //        currentForce = Mathf.Clamp(direction.magnitude * forceMultiplier, 0, maxForce);
+
+    //        // face in shooting direction
+    //        FaceForward();
+
+    //        if (touch.phase == TouchPhase.Began)
+    //        {
+    //            holdTime = 0f;
+    //            isHolding = true;
+
+
+    //        }
+
+    //        if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+    //        {
+    //            holdTime += Time.deltaTime; // track how long player holds
+
+    //            //  This is where you add your hold decay
+    //            if (holdTime > 2f)
+    //            {
+    //                currentForce *= 0.98f; // slowly decay power
+    //            }
+
+    //            ShowDots(true);
+
+    //            // More dots based on force
+    //            int activeDots = Mathf.Clamp(Mathf.RoundToInt(currentForce * 0.2f), 1, numberOfPoints);
+
+    //            for (int i = 0; i < numberOfPoints; i++)
+    //            {
+    //                if (i < activeDots)
+    //                {
+    //                    Points[i].SetActive(true);
+    //                    Points[i].transform.position = PointsPosition(i * step);
+    //                }
+    //                else
+    //                {
+    //                    Points[i].SetActive(false);
+    //                }
+    //            }
+    //        }
+
+    //        if (touch.phase == TouchPhase.Ended)
+    //        {
+    //            ShowDots(false);
+    //            holdTime = 0f; // reset for next shot
+    //            isHolding = false;
+    //        }
+    //    }
+    //}
+
 
     void Update()
     {
@@ -53,21 +122,21 @@ public class BowScript : MonoBehaviour
             {
                 holdTime = 0f;
                 isHolding = true;
+
+                //  tell animator we started drawing
+                if (animator != null)
+                    animator.SetBool("isDrawing", true);
             }
 
             if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
             {
-                holdTime += Time.deltaTime; // track how long player holds
+                holdTime += Time.deltaTime;
 
-                //  This is where you add your hold decay
                 if (holdTime > 2f)
-                {
-                    currentForce *= 0.98f; // slowly decay power
-                }
+                    currentForce *= 0.98f; // decay if held too long
 
                 ShowDots(true);
 
-                // More dots based on force
                 int activeDots = Mathf.Clamp(Mathf.RoundToInt(currentForce * 0.2f), 1, numberOfPoints);
 
                 for (int i = 0; i < numberOfPoints; i++)
@@ -78,21 +147,29 @@ public class BowScript : MonoBehaviour
                         Points[i].transform.position = PointsPosition(i * step);
                     }
                     else
-                    {
                         Points[i].SetActive(false);
-                    }
                 }
+
+                // update how far drawn (01)
+                if (animator != null)
+                    animator.SetFloat("drawPercent", currentForce / maxForce);
             }
 
             if (touch.phase == TouchPhase.Ended)
             {
                 ShowDots(false);
-                holdTime = 0f; // reset for next shot
+                holdTime = 0f;
                 isHolding = false;
+
+                //  trigger release animation
+                if (animator != null)
+                {
+                    animator.SetBool("isDrawing", false);
+                    animator.SetTrigger("release");
+                }
             }
         }
     }
-
     void FaceForward()
     {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -103,9 +180,21 @@ public class BowScript : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, clampedAngle);
     }
 
+    //Vector2 PointsPosition(float t)
+    //{
+    //    Vector2 currentPointPos = bowPos +
+    //        (direction.normalized * currentForce * t) +
+    //        0.5f * Physics2D.gravity * (t * t);
+
+    //    return currentPointPos;
+    //}
+
     Vector2 PointsPosition(float t)
     {
-        Vector2 currentPointPos = bowPos +
+        Vector2 startPos = trajectoryStartPoint != null ?
+                           (Vector2)trajectoryStartPoint.position : bowPos;
+
+        Vector2 currentPointPos = startPos +
             (direction.normalized * currentForce * t) +
             0.5f * Physics2D.gravity * (t * t);
 
