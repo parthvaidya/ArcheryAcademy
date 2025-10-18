@@ -785,6 +785,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168384025}
   m_CullTransparentMesh: 1
+--- !u!4 &210742628 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5135838804946119747, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
+  m_PrefabInstance: {fileID: 1122520313}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &225085330
 GameObject:
   m_ObjectHideFlags: 0
@@ -2129,6 +2134,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1982050777777508532, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982050777777508532, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982050777777508532, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.8939039
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982050777777508532, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.44825876
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982050777777508532, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 53.264
+      objectReference: {fileID: 0}
     - target: {fileID: 6106174296668668351, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
       propertyPath: m_Name
       value: Arjun
@@ -2139,11 +2164,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6856672049192588700, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.84000003
+      value: 0.5885041
       objectReference: {fileID: 0}
     - target: {fileID: 6856672049192588700, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.84000003
+      value: 0.550284
       objectReference: {fileID: 0}
     - target: {fileID: 6856672049192588700, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
       propertyPath: m_LocalScale.z
@@ -2151,11 +2176,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6856672049192588700, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.47
+      value: -6.335
       objectReference: {fileID: 0}
     - target: {fileID: 6856672049192588700, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.53341424
+      value: -1.8065
       objectReference: {fileID: 0}
     - target: {fileID: 6856672049192588700, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2190,7 +2215,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4695027138819358526, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6106174296668668351, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
@@ -2203,11 +2229,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1122520318}
   m_SourcePrefab: {fileID: 100100000, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
---- !u!4 &1122520314 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3528518489406322195, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
-  m_PrefabInstance: {fileID: 1122520313}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1122520315 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6106174296668668351, guid: 1b2c4992b3a973e4da2cb5e347c1d72a, type: 3}
@@ -2235,7 +2256,9 @@ MonoBehaviour:
   step: 0.02
   animator: {fileID: 1601928667}
   arrowSpawnPoint: {fileID: 1122520319}
-  trajectoryStartPoint: {fileID: 1122520314}
+  trajectoryStartPoint: {fileID: 1122520319}
+  chestBone: {fileID: 210742628}
+  cachedAimDirection: {x: 0, y: 0}
 --- !u!114 &1122520317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2249,7 +2272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShootArrow
   totalArrows: 100
-  bowScript: {fileID: 1323302376}
+  bowScript: {fileID: 1122520316}
   arrowCountText: {fileID: 894748632}
   canvas: {fileID: 708326990}
   outOfArrowsUI: {fileID: 1948293481}
@@ -2440,6 +2463,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   arrowSpawnPoint: {fileID: 0}
   trajectoryStartPoint: {fileID: 0}
+  chestBone: {fileID: 0}
+  cachedAimDirection: {x: 0, y: 0}
 --- !u!212 &1323302377
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -403,16 +403,16 @@ TextureImporter:
     - name: Left Bicep
       guid: 32ec8ff397bd0b6438ab5162af6054ee
       position: {x: 1.9189414, y: -128.7664, z: -1}
-      rotation: {x: 0, y: -0, z: 0.98992896, w: 0.14156532}
-      length: 106.89625
+      rotation: {x: 0, y: -0, z: 0.98992896, w: 0.14156519}
+      length: 106.89633
       parentId: 1
       color:
         serializedVersion: 2
         rgba: 4294901760
     - name: Left Foream
       guid: bd41baedd31224a4da13dc7e13ee084b
-      position: {x: 106.89628, y: -0.000009524826, z: -1}
-      rotation: {x: 0, y: 0, z: 0.025114523, w: 0.99968463}
+      position: {x: 106.89638, y: -0.000026567915, z: -1}
+      rotation: {x: 0, y: 0, z: 0.025114391, w: 0.99968463}
       length: 149.68808
       parentId: 4
       color:
@@ -420,17 +420,17 @@ TextureImporter:
         rgba: 4294902015
     - name: Bow Top P
       guid: 15f8992173bbdca478815041d1af0161
-      position: {x: 727.4001, y: 515.41144, z: 2}
-      rotation: {x: 0, y: 0, z: 0.84593785, w: 0.5332816}
-      length: 111.100266
+      position: {x: 727.4001, y: 515.4114, z: 2}
+      rotation: {x: 0, y: 0, z: 0.84593767, w: 0.53328186}
+      length: 111.100235
       parentId: -1
       color:
         serializedVersion: 2
         rgba: 4278223103
     - name: Bow Top Top
       guid: 89866898e39399443818a4349d2f68db
-      position: {x: 111.10025, y: -0.000051266557, z: 2}
-      rotation: {x: 0, y: 0, z: 0.15819302, w: 0.9874082}
+      position: {x: 111.100235, y: 0.0000034352252, z: 2}
+      rotation: {x: 0, y: 0, z: 0.15819338, w: 0.9874082}
       length: 119.378365
       parentId: 6
       color:
@@ -439,16 +439,16 @@ TextureImporter:
     - name: Bow Low P
       guid: 4a27ce43713f7ac4e9b7cff42790e11e
       position: {x: -113.54031, y: 44.462627, z: 2}
-      rotation: {x: 0, y: -0, z: 0.9123287, w: 0.40945858}
-      length: 110.33223
+      rotation: {x: 0, y: -0, z: 0.9123288, w: 0.40945846}
+      length: 110.332214
       parentId: 6
       color:
         serializedVersion: 2
         rgba: 4286643968
     - name: Bow Low Low
       guid: 466cbf0cd3add8049a04ee8ac8888e1a
-      position: {x: 110.33229, y: -0.000006572134, z: 2}
-      rotation: {x: 0, y: 0, z: -0.14788738, w: 0.98900425}
+      position: {x: 110.33219, y: -0.000068509245, z: 2}
+      rotation: {x: 0, y: 0, z: -0.14788754, w: 0.98900425}
       length: 126.645424
       parentId: 8
       color:
