@@ -16,7 +16,7 @@ public class BowScript : MonoBehaviour
     private float holdTime = 0f;
     private bool isHolding = false;
 
-    [SerializeField] private Animator animator;
+    //[SerializeField] private Animator animator;
     [SerializeField] public Transform arrowSpawnPoint;
     [SerializeField] public Transform trajectoryStartPoint;
     [SerializeField] private Transform chestBone;
@@ -55,7 +55,7 @@ public class BowScript : MonoBehaviour
             {
                 holdTime = 0f;
                 isHolding = true;
-                if (animator != null) animator.SetBool("isDrawing", true);
+                //if (animator != null) animator.SetBool("isDrawing", true);
             }
 
             if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
@@ -77,8 +77,8 @@ public class BowScript : MonoBehaviour
                         Points[i].SetActive(false);
                 }
 
-                if (animator != null)
-                    animator.SetFloat("drawPercent", currentForce / maxForce);
+                //if (animator != null)
+                //    animator.SetFloat("drawPercent", currentForce / maxForce);
             }
 
             if (touch.phase == TouchPhase.Ended)
@@ -86,11 +86,11 @@ public class BowScript : MonoBehaviour
                 ShowDots(false);
                 holdTime = 0f;
                 isHolding = false;
-                if (animator != null)
-                {
-                    animator.SetBool("isDrawing", false);
-                    animator.SetTrigger("release");
-                }
+                //if (animator != null)
+                //{
+                //    animator.SetBool("isDrawing", false);
+                //    animator.SetTrigger("release");
+                //}
             }
         }
     }
